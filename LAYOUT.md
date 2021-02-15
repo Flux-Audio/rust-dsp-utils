@@ -28,13 +28,17 @@ use  dsp_utils::{effects::saturation, fft::windows};
 ## Utils Repository Structure
 ````ps1
 src/
+├─── lib.rs                 # contains crate root and unit tests
 ├─── utils/
+|    ├─── mod.rs
 │    ├─── math.rs           # various mathematical functions, like normalization, median, ...
 │    └─── misc.rs           # various other utilities, like random
 ├─── effects/
+|    ├─── mod.rs
 │    ├─── saturation.rs     # various saturation functions, like tanh(x), soft-clip, ...
 │    ├─── hysteresis.rs     # various hysteresis functions, like dx^3, ...
 │    └─── bias.rs           # various bias functions, like swish, ReLU, ...
 └─── fft/
+     ├─── mod.rs
      └─── windows.rs        # various windowing functions for fft
 ````
