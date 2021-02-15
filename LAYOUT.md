@@ -32,7 +32,7 @@ src/
 ├─── utils/
 |    ├─── mod.rs
 │    ├─── math.rs           # various mathematical functions, like normalization, median, ...
-│    └─── misc.rs           # various other utilities, like random
+│    └─── chaos.rs          # various random value generators
 ├─── effects/
 |    ├─── mod.rs
 │    ├─── saturation.rs     # various saturation functions, like tanh(x), soft-clip, ...
