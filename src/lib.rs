@@ -1,3 +1,5 @@
+pub mod utils;
+
 /**
  *  Unit tests
  */
