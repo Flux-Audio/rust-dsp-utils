@@ -1,9 +1,8 @@
-pub mod utils;
+pub mod chaos;
 
 /**
  *  Unit tests
  */
-
 #[cfg(test)]
 mod tests {
     #[test]
