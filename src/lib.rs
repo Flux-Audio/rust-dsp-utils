@@ -1,4 +1,5 @@
 pub mod utils;
+pub mod fft;
 
 /**
  *  Unit tests

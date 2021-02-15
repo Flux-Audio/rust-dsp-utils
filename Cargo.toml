@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 rand_xoshiro = "0.4.*"
+rustfft = "4.*.*"

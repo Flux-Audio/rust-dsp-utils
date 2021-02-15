@@ -26,7 +26,7 @@ use  dsp_utils::{effects::saturation, fft::windows};
 
 
 ## Utils Repository Structure
-````ps1
+````
 src/
 ├─── lib.rs                 # contains crate root and unit tests
 ├─── utils/
