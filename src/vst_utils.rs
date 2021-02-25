@@ -5,6 +5,14 @@ macro_rules! struct_params {
         struct EffectParameters {
             $($param: AtomicFloat,)+
         }
+
+        impl Default for EffectParameters {
+            fn default() -> EffectParameters {
+                EffectParameters {
+                    $($param: AtomicFloat::new(0.0),)+
+                }
+            }
+        }
     };
 }
 
