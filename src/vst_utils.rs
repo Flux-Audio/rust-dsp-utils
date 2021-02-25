@@ -1,10 +1,10 @@
 /// autofill struct body
 #[macro_export]
-macro_rules! declare_params {
+macro_rules! struct_params {
     ($($param:ident),+) => {
-        $(
-            $param: AtomicFloat,
-        )+
+        struct EffectParameters {
+            $($param: AtomicFloat,)+
+        }
     };
 }
 
