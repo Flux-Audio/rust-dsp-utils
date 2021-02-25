@@ -29,6 +29,7 @@ use  dsp_utils::{effects::saturation, fft::windows};
 ````
 src/
 ├─── lib.rs                 # contains crate root and unit tests
+├─── vst.rs                 # contains helper macros for the rust-vst library
 ├─── utils/
 |    ├─── mod.rs
 │    ├─── math.rs           # various mathematical functions, like normalization, median, ...
