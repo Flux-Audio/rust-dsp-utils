@@ -3,8 +3,9 @@
 ## Local File Structure
 ```ps1
 src/
-├─── lib.rs
-└─── compute.rs
+├─── editor.rs      # GUI (with the druid crate)
+├─── lib.rs         # main and business logic
+└─── compute.rs     # utility function specific to the plugin
 ```
 ``lib.rs`` contains the plugin main and business logic.
 ``compute.rs`` contains additional helper function, to hide the implementation details from the plugin's main.
