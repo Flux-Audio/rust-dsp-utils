@@ -1,6 +1,6 @@
 pub mod utils;
 pub mod fft;
-pub mod vst;
+pub mod vst_utils;
 
 /**
  *  Unit tests
