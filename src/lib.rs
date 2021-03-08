@@ -25,12 +25,13 @@ mod tests {
 
     #[test]
     fn test_delay_line_trunc_sum() {
-        let mut delay_line = delay::DelayLine::new(1000.0, 1, delay::InterpMethod::Truncate, delay::MixMethod::Sum);
+        let mut delay_line = delay::DelayLine::new(10000.0, 2, delay::InterpMethod::Truncate, delay::MixMethod::Sum);
         assert!(delay_line.add_head(0.0, 1.0) == 0);
         assert!(delay_line.add_head(1000.0, 1.0) == 1);
         assert!(delay_line.read_write(1.0) == 0.0);
         assert!(delay_line.read_write(1.0) == 1.0);
-        assert!(delay_line.read_write(0.0) == 2.0);
+        assert!(delay_line.read_write(0.0) == 1.0);
+        assert!(delay_line.read_write(0.0) == 1.0);
     }
 
     #[test]

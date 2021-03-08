@@ -5,6 +5,7 @@ use crate::utils::math;
 pub struct DelayLine {
     vector: VecDeque<f32>,
     num: usize,
+    sr: u32,
     head_offsets: Vec<f32>,
     head_gains: Vec<f32>,
     interp_mode: InterpMethod,
@@ -34,6 +35,7 @@ impl DelayLine {
         Self {
             vector: VecDeque::from(vec![0.0; num]),
             num: num,
+            sr: sr,
             head_offsets: Vec::new(),
             head_gains: Vec::new(),
             interp_mode: interp,
@@ -48,7 +50,7 @@ impl DelayLine {
     /// # Returns
     /// - index of the head
     pub fn add_head(&mut self, offset: f32, gain: f32) -> usize {
-        self.head_offsets.push(offset/1000.0);
+        self.head_offsets.push(offset/1000.0 * self.sr as f32);
         self.head_gains.push(gain);
         self.head_offsets.len() - 1
     }
@@ -96,7 +98,7 @@ impl DelayLine {
         // Step 1: read previous values from read heads
         let accumulator = self.head_offsets.iter()
             .zip(self.head_gains.iter())
-            .map(|(a, b)| match self.interp_mode {
+            .map(|(a, b)| {println!("{}", a); match self.interp_mode {
                     InterpMethod::Truncate => 
                         self.vector[*a as usize]*b,
                     InterpMethod::NearestNeighbor => 
@@ -106,7 +108,7 @@ impl DelayLine {
                         let x = *a - i as f32;
                         math::x_fade(self.vector[i], x, self.vector[i + 1])
                     },
-                })
+                }})
             .sum::<f32>() / match self.mix_mode {
                 MixMethod::Sum => 1.0,
                 MixMethod::Sqrt => (self.head_offsets.len() as f32).sqrt(),
