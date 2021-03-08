@@ -82,7 +82,7 @@ impl DelayLine {
     /// TODO: perhaps heads should be stored in a dictionary instead.
     pub fn set_offset(&mut self, index: usize, offset: f32) -> bool {
         if index < self.head_offsets.len() {
-            self.head_offsets[index] = offset;
+            self.head_offsets[index] = offset/1000.0 * self.sr as f32;
             true
         } else {
             false
