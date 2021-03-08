@@ -2,6 +2,7 @@ pub mod utils;
 pub mod fft;
 pub mod vst_utils;
 pub mod effects;
+pub mod osc;
 
 /**
  *  Unit tests
