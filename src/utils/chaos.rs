@@ -117,9 +117,9 @@ impl Rng {
     /// use this for tape flutter.
     /// ***warning:** only call once per sample*
     pub fn flutter_noise(&mut self) -> f32 {
-        self.rotor_1 += 24.0*self.flutter_cores[0]/self.sr as f32;
-        self.rotor_2 += 24.0*self.flutter_cores[1]/self.sr as f32;
-        self.rotor_3 += 24.0*self.flutter_cores[2]/self.sr as f32;
+        self.rotor_1 += 12.0*self.flutter_cores[0]/self.sr as f32;
+        self.rotor_2 += 12.0*self.flutter_cores[1]/self.sr as f32;
+        self.rotor_3 += 12.0*self.flutter_cores[2]/self.sr as f32;
         if self.rotor_1 > consts::TAU {
             self.rotor_1 -= consts::TAU;
         }
@@ -138,9 +138,9 @@ impl Rng {
     /// use this for cassette dropoff.
     /// ***warning:** only call once per sample*
     pub fn dropoff_noise(&mut self) -> f32 {
-        self.rotor_4 += 24.0*self.dropout_cores[0]/self.sr as f32;
-        self.rotor_5 += 24.0*self.dropout_cores[1]/self.sr as f32;
-        self.rotor_6 += 24.0*self.dropout_cores[2]/self.sr as f32;
+        self.rotor_4 += 12.0*self.dropout_cores[0]/self.sr as f32;
+        self.rotor_5 += 12.0*self.dropout_cores[1]/self.sr as f32;
+        self.rotor_6 += 12.0*self.dropout_cores[2]/self.sr as f32;
         if self.rotor_4 > consts::TAU {
             self.rotor_4 -= consts::TAU;
         }
