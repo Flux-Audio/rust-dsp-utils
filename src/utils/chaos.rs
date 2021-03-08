@@ -11,9 +11,9 @@ use std::f32::consts;
 
 /// Provider of randomness. It keeps the state of all random number generators.
 ///
-/// ***Warning: * all generators within the same instance of rng are correlated to
+/// ***Warning:** all generators within the same instance of rng are correlated to
 /// each other. If you need uncorrelated noise, you should create separate
-/// instances.**
+/// instances.*
 pub struct Rng {
     rng_core: Xoshiro256Plus,
     flutter_cores: Vec<f32>,
@@ -115,6 +115,7 @@ impl Rng {
     /// flutter noise.
     ///
     /// use this for tape flutter.
+    /// ***warning:** only call once per sample
     pub fn flutter_noise(&mut self) -> f32 {
         self.rotor_1 += self.flutter_cores[0]/self.sr as f32;
         self.rotor_2 += self.flutter_cores[1]/self.sr as f32;
@@ -128,13 +129,14 @@ impl Rng {
         if self.rotor_3 > consts::TAU {
             self.rotor_3 -= consts::TAU;
         }
-        let ret = self.rotor_1.sin() + self.rotor_2.sin() + self.rotor_3.sin(); 
+        let ret = (self.rotor_1.sin() + self.rotor_2.sin() + self.rotor_3.sin())/3.0; 
         return ret.abs().powf(8.0) * ret.signum();
     }
 
     /// dropout noise.
     ///
     /// use this for cassette dropoff.
+    /// ***warning:** only call once per sample
     pub fn dropoff_noise(&mut self) -> f32 {
         self.rotor_4 += self.dropout_cores[0]/self.sr as f32;
         self.rotor_5 += self.dropout_cores[1]/self.sr as f32;
@@ -148,7 +150,7 @@ impl Rng {
         if self.rotor_6 > consts::TAU {
             self.rotor_6 -= consts::TAU;
         }
-        let ret = self.rotor_4.sin() + self.rotor_5.sin() + self.rotor_6.sin(); 
+        let ret = (self.rotor_4.sin() + self.rotor_5.sin() + self.rotor_6.sin())/3.0; 
         return ret.abs().powf(6.0);
     }
 }
