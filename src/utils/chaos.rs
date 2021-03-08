@@ -115,11 +115,11 @@ impl Rng {
     /// flutter noise.
     ///
     /// use this for tape flutter.
-    /// ***warning:** only call once per sample
+    /// ***warning:** only call once per sample*
     pub fn flutter_noise(&mut self) -> f32 {
-        self.rotor_1 += self.flutter_cores[0]/self.sr as f32;
-        self.rotor_2 += self.flutter_cores[1]/self.sr as f32;
-        self.rotor_3 += self.flutter_cores[2]/self.sr as f32;
+        self.rotor_1 += consts::TAU*self.flutter_cores[0]/self.sr as f32;
+        self.rotor_2 += consts::TAU*self.flutter_cores[1]/self.sr as f32;
+        self.rotor_3 += consts::TAU*self.flutter_cores[2]/self.sr as f32;
         if self.rotor_1 > consts::TAU {
             self.rotor_1 -= consts::TAU;
         }
@@ -130,17 +130,17 @@ impl Rng {
             self.rotor_3 -= consts::TAU;
         }
         let ret = (self.rotor_1.sin() + self.rotor_2.sin() + self.rotor_3.sin())/3.0; 
-        return ret.abs().powf(8.0) * ret.signum();
+        return ret.abs().powf(6.0) * ret.signum();
     }
 
     /// dropout noise.
     ///
     /// use this for cassette dropoff.
-    /// ***warning:** only call once per sample
+    /// ***warning:** only call once per sample*
     pub fn dropoff_noise(&mut self) -> f32 {
-        self.rotor_4 += self.dropout_cores[0]/self.sr as f32;
-        self.rotor_5 += self.dropout_cores[1]/self.sr as f32;
-        self.rotor_6 += self.dropout_cores[2]/self.sr as f32;
+        self.rotor_4 += consts::TAU*self.dropout_cores[0]/self.sr as f32;
+        self.rotor_5 += consts::TAU*self.dropout_cores[1]/self.sr as f32;
+        self.rotor_6 += consts::TAU*self.dropout_cores[2]/self.sr as f32;
         if self.rotor_4 > consts::TAU {
             self.rotor_4 -= consts::TAU;
         }
