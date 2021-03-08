@@ -25,4 +25,8 @@ impl RampCore {
     pub fn reset(&mut self) {
         self.phase = self.init_phase;
     }
+
+    pub fn set_freq(&mut self, freq: f32) {
+        self.rad_per_sec = freq*consts::TAU;
+    }
 }
