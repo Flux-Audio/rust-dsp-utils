@@ -112,6 +112,7 @@ impl Rng {
         return self.randf() < p;
     }
 
+    // TODO: replace with filtered noise from HYSTERESIS
     /// flutter noise.
     ///
     /// use this for tape flutter.
@@ -133,6 +134,7 @@ impl Rng {
         return ret.abs().powf(6.0) * ret.signum();
     }
 
+    // TODO: replace with filtered noise from HYSTERESIS
     /// dropout noise.
     ///
     /// use this for cassette dropoff.
