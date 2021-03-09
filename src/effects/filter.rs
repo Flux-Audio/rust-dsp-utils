@@ -1,6 +1,6 @@
 /// 2-pole state variable filter. Implements lowpass, highpass, notch and
 /// bandpass filters with shared state.
-struct Svf {
+pub struct Svf {
     lp_z1:    f32,
     hp_z1:    f32,
     notch_z1: f32,
@@ -43,7 +43,7 @@ impl Svf {
 }
 
 /// DC offset blocking filter.
-struct BlockDC {
+pub struct BlockDC {
     x_z1: f32,
     y_z1: f32,
 }
