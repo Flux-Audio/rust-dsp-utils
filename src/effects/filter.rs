@@ -1,9 +1,9 @@
+use std::collections::VecDeque;
+
 /// 2-pole state variable filter. Implements lowpass, highpass, notch and
 /// bandpass filters with shared state.
 pub struct Svf {
     lp_z1:    f32,
-    hp_z1:    f32,
-    notch_z1: f32,
     bp_z1:    f32,
 }
 
@@ -12,8 +12,6 @@ impl Svf {
     pub fn new() -> Self {
         Self {
             lp_z1:    0.0,
-            hp_z1:    0.0,
-            notch_z1: 0.0,
             bp_z1:    0.0,
         }
     }
@@ -33,8 +31,6 @@ impl Svf {
 
         // Update state:
         self.lp_z1    = lp;
-        self.hp_z1    = hp;
-        self.notch_z1 = notch;
         self.bp_z1    = bp;
 
         // return 
@@ -81,5 +77,37 @@ impl BlockDC {
         self.y_z1 = input - self.x_z1 + 0.5*self.y_z1;
         self.x_z1 = input;
         return self.y_z1;
+    }
+}
+
+/// Allpass filter with negative feedback and a set cutoff frequency.
+pub struct AllPass {
+    line: VecDeque<f32>,
+    fb: f32,
+}
+
+impl AllPass {
+    /// Create a new filter with a set cutoff frequency. Note that the cutoff
+    /// frequency will not be achieved exactly, as the internal delay is always
+    /// an integer amount of samples long to avoid interpolation artifacts.
+    pub fn new(f: f32, fb: f32, sr: u32) -> Self {
+        let num = (1.0/f * sr as f32) as usize + 1;
+        Self {
+            line: VecDeque::from(vec![0.0; num]),
+            fb: fb,
+        }
+    }
+
+    /// Filter a single sample with negative feedback.
+    pub fn filter(&mut self, input: f32) -> f32 {
+        let y_z1 = self.line.pop_front().unwrap();
+        let x = input - y_z1*self.fb;
+        self.line.push_back(x);
+        return y_z1 + x*self.fb;
+    }
+
+    /// Change the feedback of the filter
+    pub fn set_fb(&mut self, fb: f32) {
+        self.fb = fb;
     }
 }
