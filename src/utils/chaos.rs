@@ -82,9 +82,9 @@ impl Rng {
 
     /// brown noise
     pub fn noise_brown(&mut self) -> f32 {
-        let white = self.randf() - 0.5;
-        self.brown_accum = (self.brown_accum + (0.02*white))/1.01;   // leaky integrator
-        return self.brown_accum*3.5;  // (roughly) compensate for gain
+        let white = (self.randf() - 0.5) * 0.1;
+        self.brown_accum = self.brown_accum*0.98 + white;   // leaky integrator
+        return self.brown_accum;
     }
 
     /// violet noise
@@ -155,6 +155,12 @@ impl Rng {
         let ret = (self.rotor_4.sin() + self.rotor_5.sin() + self.rotor_6.sin())/3.0; 
         return ret.abs().powf(6.0);
     }
+
+    /// geiger noise (random triggers)
+    /// 
+    pub fn geiger_noise(&mut self, rate: f32, random: f32) -> f32 {
+        0.0
+    }
 }
 
-// /// geiger noise (random triggers)
+

@@ -111,3 +111,60 @@ impl AllPass {
         self.fb = fb;
     }
 }
+
+/// 1-pole integrator
+pub struct Integrator {
+    prev: f32,
+}
+
+impl Integrator {
+    pub fn new() -> Self {
+        Self {
+            prev: 0.0,
+        }
+    }
+
+    /// Find the numeric integral of x for the time interval delta. This is
+    /// inlined for use within algorithms.
+    #[inline(always)]
+    pub fn integrate(&mut self, x: f32, delta: f32) -> f32 {
+        self.prev += x * delta;
+        return self.prev;
+    }
+
+    /// Find the numeric integral of x, for delta = 1
+    pub fn filter(&mut self, x: f32) -> f32 {
+        self.prev += x;
+        return self.prev;
+    }
+}
+
+
+/// 1-pole differentiator
+pub struct Diff{
+    prev: f32,
+}
+
+impl Diff{
+    pub fn new() -> Self {
+        Self {
+            prev: 0.0,
+        }
+    }
+
+    /// Find the numeric derivative of x for the given time interval. This is
+    /// inlined for use within algorithms.
+    #[inline(always)]
+    pub fn diff(&mut self, x: f32, delta: f32) -> f32 {
+        let dx = x - self.prev;
+        self.prev = x;
+        return dx / delta ;
+    }
+
+    /// Find the numeric derivative of x, for delta = 1
+    pub fn filter(&mut self, x: f32) -> f32 {
+        let ret = x - self.prev;
+        self.prev = x;
+        return x;
+    }
+}
